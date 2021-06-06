@@ -19,7 +19,7 @@ const getLocationKey = async userInput => {
   }
 }
 
-const getCurrentConditionsURL = locationKey => `http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${APIKey}`
+const getCurrentConditionsURL = locationKey => `http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${APIKey}&language=pt-br`
 
 const getCityCurrentConditions = async () => {
   const locationKey = await getLocationKey(userInput)
