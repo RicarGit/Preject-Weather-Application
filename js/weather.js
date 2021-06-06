@@ -1,46 +1,31 @@
-const APIKey = 'SBMSWwMZP03GxVDtWSticiY92rGo4NT8'
-const userInput = 'Itatiba'
+const APIKey = 'AOAPByhCvKUZmvzPrV7SBSBSOf63LvR2'
+const defaultURL = 'http://dataservice.accuweather.com/'
 
-const getLocationURL = userInput => `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${APIKey}&q=${userInput}&language=pt-br`
+const getCityURL = cityName =>
+  `${defaultURL}locations/v1/cities/search?apikey=${APIKey}&q=${cityName}`
 
-const getLocationKey = async userInput => {
+const getWeatherURL = ({ Key }) =>
+  `${defaultURL}currentconditions/v1/${Key}?apikey=${APIKey}&language=pt-br`
+
+const fetchData = async url => {
   try {
-    const response = await fetch(getLocationURL(userInput))
+    const response = await fetch(url)
 
     if (!response.ok) {
       throw new Error('Não foi possível obter os dados.')
     }
 
-    const [locationData] = await response.json()
-
-    return locationData.Key
+    return response.json()
   } catch ({ name, message }) {
     alert(`${name}: ${message}`)
   }
 }
 
-const getCurrentConditionsURL = locationKey => `http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${APIKey}&language=pt-br`
+const getCityData = cityName => fetchData(getCityURL(cityName))
 
-const getCityCurrentConditions = async () => {
-  const locationKey = await getLocationKey(userInput)
-  try {
-    const response = await fetch(getCurrentConditionsURL(locationKey))
-
-    if (!response.ok) {
-      throw new Error('Não foi possível obter os dados.')
-    }
-
-    const [conditionsData] = await response.json()
-
-    const isDayTime = conditionsData.IsDayTime
-    const weatherText = conditionsData.WeatherText
-    const cityCelsiusTemperature = conditionsData.Temperature.Metric.Value
-
-  } catch ({ name, message }) {
-    alert(`${name}: ${message}`)
-  }
-
+const getCityCurrentConditions = async cityName => {
+  const [cityData] = await getCityData(cityName)
+  return fetchData(getWeatherURL(cityData))
 }
 
-getLocationKey(userInput)
-getCityCurrentConditions()
+getCityCurrentConditions('itatiba')
