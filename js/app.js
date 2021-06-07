@@ -34,8 +34,8 @@ cityForm.addEventListener('submit', async event => {
     const cityCelsiusTemperature = Math.round(Temperature.Metric.Value)
 
     dayTimeContainer.src = isDayTime
-      ? '../src/day.svg'
-      : '../src/night.svg'
+      ? './src/day.svg'
+      : './src/night.svg'
 
     insertWeatherInfoIntoDom(cityNameContainer, cityName)
     insertWeatherInfoIntoDom(weatherClimate, cityClimate)
