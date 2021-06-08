@@ -1,4 +1,4 @@
-const APIKey = 'AOAPByhCvKUZmvzPrV7SBSBSOf63LvR2'
+const APIKey = '3CFP8ESOqYIoLyewipQs4zCJlTmPq46b'
 const defaultURL = 'http://dataservice.accuweather.com/'
 
 const getCityURL = cityName =>
@@ -22,5 +22,4 @@ const fetchData = async url => {
 }
 
 const getCityData = cityName => fetchData(getCityURL(cityName))
-
 const getCityCurrentConditions = cityKey => fetchData(getWeatherURL(cityKey))
