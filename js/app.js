@@ -35,12 +35,17 @@ const clearFormInput = () => {
   cityForm.focus()
 }
 
-const getCityWeatherInfos = async cityName => {
-  const [{ Key, LocalizedName }] = await
-    getCityData(cityName)
+const fetchCityWeatherInfos = async cityName => {
+  const [{ Key, LocalizedName }] = await getCityData(cityName)
   const [{ IsDayTime, WeatherText, Temperature, WeatherIcon }] = await
     getCityCurrentConditions(Key)
 
+  return { LocalizedName, IsDayTime, WeatherText, Temperature, WeatherIcon }
+}
+
+const getCityWeatherInfos = async cityName => {
+  const { LocalizedName, IsDayTime, WeatherText, Temperature, WeatherIcon } =
+    await fetchCityWeatherInfos(cityName)
   const cityCelsiusTemperature = Math.round(Temperature.Metric.Value)
 
   cityNameContainer.textContent = LocalizedName
